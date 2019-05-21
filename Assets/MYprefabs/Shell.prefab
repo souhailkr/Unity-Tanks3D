@@ -4938,6 +4938,9 @@ MonoBehaviour:
   m_MaxLifeTime: 2
   m_ExplosionRadius: 5
   wa: {fileID: 1446050696222103848, guid: f87c07bd86c6bf143b8f21106a8a8ccf, type: 3}
+  crate: {fileID: 198000014088447588, guid: f863881ac6a570f47b0f4af2bb283d94, type: 3}
+  crateExplosion: {fileID: 916862913714314369, guid: f863881ac6a570f47b0f4af2bb283d94,
+    type: 3}
   wab: {fileID: 5488958570519789971, guid: f87c07bd86c6bf143b8f21106a8a8ccf, type: 3}
 --- !u!82 &4979571667818912098
 AudioSource:

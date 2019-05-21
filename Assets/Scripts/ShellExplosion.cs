@@ -12,6 +12,9 @@ public class ShellExplosion : MonoBehaviour
     public float m_MaxLifeTime = 2f;                    // The time in seconds before the shell is removed.
     public float m_ExplosionRadius = 5f;                // The maximum distance away from the explosion tanks can be and are still affected.
     public ParticleSystem wa;
+    public ParticleSystem crate;
+    public AudioSource crateExplosion;
+
     public AudioSource wab;
     private void Start()
     {
@@ -31,6 +34,17 @@ public class ShellExplosion : MonoBehaviour
             wab.Play();
             Instantiate(wa, transform.position, transform.rotation);
             
+
+
+            Destroy(other.gameObject);
+        }
+
+        if (other.gameObject.tag.Equals("crate"))
+        {
+
+            crateExplosion.Play();
+            Instantiate(crate, transform.position, transform.rotation);
+
 
 
             Destroy(other.gameObject);

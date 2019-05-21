@@ -20,6 +20,7 @@ public class TankShoot : MonoBehaviour
     private float m_CurrentLaunchForce;         // The force that will be given to the shell when the fire button is released.
     private float m_ChargeSpeed;                // How fast the launch force increases, based on the max charge time.
     private bool m_Fired;                       // Whether or not the shell has been launched with this button press.
+    public JoyButton JoyButton;
 
 
     private void OnEnable()
@@ -32,6 +33,7 @@ public class TankShoot : MonoBehaviour
 
     private void Start()
     {
+        JoyButton = FindObjectOfType<JoyButton>();
         // The fire axis is based on the player number.
         m_FireButton = "Fire" + m_PlayerNumber;
 
@@ -46,14 +48,14 @@ public class TankShoot : MonoBehaviour
         //m_AimSlider.value = m_MinLaunchForce;
 
         // If the max force has been exceeded and the shell hasn't yet been launched...
-        if (m_CurrentLaunchForce >= m_MaxLaunchForce && !m_Fired)
+        if (m_CurrentLaunchForce >= m_MaxLaunchForce && !m_Fired )
         {
             // ... use the max force and launch the shell.
             m_CurrentLaunchForce = m_MaxLaunchForce;
             Fire();
         }
         // Otherwise, if the fire button has just started being pressed...
-        else if (Input.GetButtonDown(m_FireButton))
+        else if (Input.GetButtonDown(m_FireButton) || JoyButton.Pressed)
         {
             // ... reset the fired flag and reset the launch force.
             m_Fired = false;
@@ -64,7 +66,7 @@ public class TankShoot : MonoBehaviour
             m_ShootingAudio.Play();
         }
         // Otherwise, if the fire button is being held and the shell hasn't been launched yet...
-        else if (Input.GetButton(m_FireButton) && !m_Fired)
+        else if ((Input.GetButton(m_FireButton) || JoyButton.Pressed) && !m_Fired  )
         {
             // Increment the launch force and update the slider.
             m_CurrentLaunchForce += m_ChargeSpeed * Time.deltaTime;
@@ -72,11 +74,14 @@ public class TankShoot : MonoBehaviour
             //m_AimSlider.value = m_CurrentLaunchForce;
         }
         // Otherwise, if the fire button is released and the shell hasn't been launched yet...
-        else if (Input.GetButtonUp(m_FireButton) && !m_Fired)
+        else if ((Input.GetButtonUp(m_FireButton) || JoyButton.Pressed) && !m_Fired )
         {
             // ... launch the shell.
             Fire();
         }
+
+
+       
     }
 
 

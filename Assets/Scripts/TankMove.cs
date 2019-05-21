@@ -20,6 +20,12 @@ public class TankMove : MonoBehaviour
     private float m_TurnInputValue;             // The current value of the turn input.
     private float m_OriginalPitch;              // The pitch of the audio source at the start of the scene.
 
+    public float speed;
+    public VariableJoystick variableJoystick;
+    public Rigidbody rb;
+    public VariableJoystick j;
+
+
 
     private void Awake()
     {
@@ -48,20 +54,24 @@ public class TankMove : MonoBehaviour
     private void Start()
     {
         // The axes names are based on player number.
-        m_MovementAxisName = "Vertical" + m_PlayerNumber;
-        m_TurnAxisName = "Horizontal" + m_PlayerNumber;
+        m_MovementAxisName = "Vertical" ;
+        m_TurnAxisName = "Horizontal" ;
 
         // Store the original pitch of the audio source.
         m_OriginalPitch = m_MovementAudio.pitch;
+
+
+        
     }
 
 
     private void Update()
     {
         // Store the value of both input axes.
-        m_MovementInputValue = Input.GetAxis(m_MovementAxisName);
-        m_TurnInputValue = Input.GetAxis(m_TurnAxisName);
+        m_MovementInputValue = j.Vertical;
+        m_TurnInputValue = j.Horizontal;
 
+       
         EngineAudio();
     }
 
@@ -96,7 +106,7 @@ public class TankMove : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // Adjust the rigidbodies position and orientation in FixedUpdate.
+       
         Move();
         Turn();
     }
@@ -104,6 +114,10 @@ public class TankMove : MonoBehaviour
 
     private void Move()
     {
+
+       
+
+       
         // Create a vector in the direction the tank is facing with a magnitude based on the input, speed and the time between frames.
         Vector3 movement = transform.forward * m_MovementInputValue * m_Speed * Time.deltaTime;
 
@@ -123,4 +137,6 @@ public class TankMove : MonoBehaviour
         // Apply this rotation to the rigidbody's rotation.
         m_Rigidbody.MoveRotation(m_Rigidbody.rotation * turnRotation);
     }
+
+   
 }
